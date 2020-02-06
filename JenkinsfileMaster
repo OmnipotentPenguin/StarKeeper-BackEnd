@@ -12,7 +12,7 @@ pipeline {
         stage('--package--') {
             steps {
                 sh "mvn package"
-                sh "docker build -t omnipotentpenguin/starkeeper-dev ."
+                sh "docker build -t omnipotentpenguin/starkeeper-prod ."
             }
         }
         stage('--deploy--') {
@@ -23,7 +23,7 @@ pipeline {
         stage('--publishToDocker--') {
             steps {
                 withDockerRegistry([ credentialsId: "dockerhub-adam", url: "" ]){
-                    sh "docker push omnipotentpenguin/starkeeper-dev:latest"
+                    sh "docker push omnipotentpenguin/starkeeper-prod:latest"
                 }
             }
         }
