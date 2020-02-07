@@ -75,24 +75,26 @@ JUnit, Mockito and Selenium were used for automated testing, with test coverage 
 <a name="depl"></a>
 ## Deployment
 
-The build, test and deployment process was automated using Jenkins, with a webhook to GitHub which was triggered with every push event
+This project implements a basic CI/CD pipeline using github, jenkins, docker hub, nexus and aws.
+The project uses jenkins ([download guide](https://jenkins.io/download/)) to pull any new commits from github and then build them using a [Jenkinsfile](https://jenkins.io/doc/book/pipeline/jenkinsfile/). The built jar is then sent on to [nexus](https://www.sonatype.com/download-oss-sonatype) where it is safely stored for later use. The jar is then placed into a [docker](https://docs.docker.com/install/) container by a Dockerfile and uploaded to [docker hub](https://docs.docker.com/docker-hub/). An AWS [EC2](https://docs.aws.amazon.com/ec2/index.html) that is running on a [VPC](https://docs.aws.amazon.com/vpc/index.html) with a mysql [RDS](https://docs.aws.amazon.com/rds/index.html) on it the pulls down the updated docker image from docker hub and starts running the new container at the prompting of the Jenkinsfile through ssh connection.
 
-This application can be deployed both locally and externally through a virtual machine.
-
-![Deployment Pipeline](/Documentation/ci-pipeline.png)
+![Deployment Pipeline](/Documentation/CI_Pipeline_2.png)
+![Security Architecture](/Documentation/Security_Setup.png)
 <a name="tech"></a>
 ### Technologies Used
 
-* H2 Database Engine - Database
-* Java/Eclipse - Back-End
+* H2 Database Engine - Database (testing)
+* AWS RDS Database - Database (Live)
+* Java - Back-End
 * Visual Studio Code - Front-End
 * Maven - Dependency Management
 * [Git](https://github.com/OmnipotentPenguin/Starkeeper) - VCS
 * [Trello](https://trello.com/b/4hNrMAWC/star-keeper-development) - Project Tracking
 * Jenkins - CI Server
-* Tomcat - Deployment
 * Surefire - Test Reporting
 * SonarQube - Static Testing
+* Nexus - Artifact Repository
+* DockerHub - Artifact Images
 * AWS - Live Environment
 
 <a name="improve"></a>
